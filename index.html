@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Line Breaks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-output {
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Remove Line Breaks</h1>
+        <p>Choose one of these line break options.</p>
+        <input type="radio" id="removeSome" name="lineBreaks" value="some" checked>
+        <label for="removeSome">Remove some line breaks (preserve paragraphs)</label><br>
+        <input type="radio" id="removeAll" name="lineBreaks" value="all">
+        <label for="removeAll">Remove ALL line breaks</label>
+        <div class="input-output">
+            <textarea id="inputText" placeholder="Paste your text here"></textarea>
+            <button onclick="removeLineBreaks()">Click to remove line breaks</button>
+            <textarea id="outputText" readonly></textarea>
+            <button onclick="copyText()">Copy Text</button>
+        </div>
+    </div>
+    <script>
+        function removeLineBreaks() {
+            const inputText = document.getElementById('inputText').value;
+            let outputText;
+            const removeAll = document.getElementById('removeAll').checked;
+
+            if (removeAll) {
+                //Remove all 3 types of line breaks
+                outputText = inputText.replace(/(\r\n|\n|\r)/gm, "");
+            } else {
+                //Replace all 3 types of line breaks with a space
+                outputText = inputText.replace(/\s+/g," ");
+                //Replace all double white spaces with single spaces
+                outputText = outputText.replace(/(\r\n|\n|\r)/gm, " ");
+            }
+
+            document.getElementById('outputText').value = outputText;
+        }
+
+        function copyText() {
+            const outputText = document.getElementById('outputText');
+            outputText.select();
+            document.execCommand('copy');
+        }
+    </script>
+</body>
+</html>
